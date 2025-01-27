@@ -15,18 +15,21 @@ import HomePage from './pages/HomePage';
 import NewsPage from "./pages/NewsPage";
 import CalculatorPage from "./pages/CalculatorPage";
 import AstronomyPage from "./pages/AstronomyPage";
+import { initGoogleAPI } from "./utils/googleCalendar";
 
 function App() {
     const { isAuthenticated, logout } = useContext(AuthContext);
     const [showOnboarding, setShowOnboarding] = useState(false);
 
     useEffect(() => {
+        initGoogleAPI();
         const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
         if (!hasSeenOnboarding) {
             setShowOnboarding(true);
             localStorage.setItem('hasSeenOnboarding', 'true');
         }
     }, []);
+    
 
     return (
         <Router>

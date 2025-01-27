@@ -8,6 +8,10 @@ const CalendarPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [eventInput, setEventInput] = useState("");
   const [recurrence, setRecurrence] = useState("None");
+  const [reminderTime, setReminderTime] = useState("");
+  const [eventColor, setEventColor] = useState("#000000");
+  const [dayEvents, setDayEvents] = useState([]);
+
 
   // Load events from local storage
   useEffect(() => {
@@ -17,13 +21,19 @@ const CalendarPage = () => {
     }
   }, []);
 
+  useEffect(() => {
+  const dateKey = selectedDate.toDateString();
+  setDayEvents(events[dateKey] || []);
+}, [selectedDate, events]);
+
+
 
   useEffect(() => {
     const now = new Date().getTime();
-  
-    events.forEach(([dateKey, eventList]) => {
+
+    Object.entries(events).forEach(([dateKey, eventList]) => {
       const eventDate = new Date(dateKey).getTime();
-  
+
       eventList.forEach((event) => {
         if (event.reminderTime) {
           const reminderTime = eventDate - event.reminderTime * 60 * 1000;
@@ -36,6 +46,7 @@ const CalendarPage = () => {
       });
     });
   }, [events]);
+
   
 
   // Save events to local storage whenever they change
@@ -46,6 +57,16 @@ const CalendarPage = () => {
   const handleDateChange = (date) => {
     setSelectedDate(date);
     setShowModal(true);
+  };
+
+  const signInToGoogle = async () => {
+    // Implement Google authentication here
+    console.log("Google Sign-In functionality");
+  };
+  
+  const createGoogleCalendarEvent = async (event) => {
+    // Implement logic to add an event to Google Calendar
+    console.log("Create Google Calendar Event:", event);
   };
 
   const addEvent = () => {
@@ -238,6 +259,31 @@ const CalendarPage = () => {
           </ul>
         </div>
       </div>
+
+      <div className="mt-6 text-center">
+        <button
+          onClick={async () => {
+            await signInToGoogle();
+            const event = {
+              summary: "New Event", // Replace with dynamic event title
+              start: {
+                dateTime: new Date(selectedDate).toISOString(),
+                timeZone: "UTC",
+              },
+              end: {
+                dateTime: new Date(selectedDate.getTime() + 60 * 60 * 1000).toISOString(), // 1-hour duration
+                timeZone: "UTC",
+              },
+            };
+            await createGoogleCalendarEvent(event);
+            alert("Event added to Google Calendar!");
+          }}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Sync to Google Calendar
+        </button>
+      </div>
+
 
       {/* Add Event Modal */}
       {showModal && (
