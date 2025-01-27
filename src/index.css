@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* index.css */
+@import "https://unpkg.com/leaflet/dist/leaflet.css";
+
+
+/* In your index.css */
+body {
+    background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+}
+
+.bg-gradient-astronomy {
+    background: linear-gradient(135deg, #2b5876, #4e4376);
+}
+
+
+/* Calendar Container */
+.react-calendar {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .react-calendar__tile {
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .react-calendar__tile--active {
+    background: #2563eb;
+    color: white;
+  }
+  
+
+  /* Modal Styles */
+.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .bg-black.bg-opacity-50 {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  
+
+  .react-calendar__tile div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .react-calendar__tile--active div {
+    background-color: #2563eb; /* Blue background for active date */
+    color: white;
+    border-radius: 50%;
+  }
+  
